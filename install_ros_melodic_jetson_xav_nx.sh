@@ -24,10 +24,17 @@ if [ "$answer" != "${answer#[Yy]}" ] ;then
 			#installing ros-mlodic-desktop
 			echo "Installing ros-melodic-desktop..."
 			sudo apt install ros-melodic-desktop
-				if [ $(rosversion -d) == "melodic" ]; then
-				echo "Installed successfully"
+			echo "Source bash files"
+				if sudo grep -Fxq "source /opt/ros/melodic/setup.bash" ~/.bashrc; then
+					echo " ros path is already existing in bashrc file"
 				else
-				echo "Failed to install melodic"
+					echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
+					. ~/.bashrc
+				fi
+                       		if [ $(rosversion -d) == "melodic" ]; then
+					echo "Installed successfully"
+				else
+					echo "Failed to install melodic"
 				fi
 		else
 			echo "Exit"
@@ -42,3 +49,5 @@ if [ "$answer" != "${answer#[Yy]}" ] ;then
 else
 	echo "Exiting installation..."
 fi
+
+
